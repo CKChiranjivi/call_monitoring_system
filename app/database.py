@@ -1,0 +1,13 @@
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
+# Make sure to properly escape special characters in the password if needed
+DATABASE_URL = "mysql+pymysql://root:Chanchal@123@localhost/call_monitor"
+
+engine = create_engine(DATABASE_URL)
+
+SessionLocal = sessionmaker(
+    autocommit=False,
+    autoflush=False,
+    bind=engine
+)

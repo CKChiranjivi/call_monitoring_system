@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Live Call Monitoring</title>
+
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+
+</head>
+
+<body>
+
+<h2>Live Calls</h2>
+
+<table border="1">
+
+<thead>
+<tr>
+<th>ID</th>
+<th>Date</th>
+<th>Time</th>
+<th>Extension</th>
+<th>Type</th>
+<th>Number</th>
+<th>Duration</th>
+</tr>
+</thead>
+
+<tbody id="calls"></tbody>
+
+</table>
+
+<script>
+
+var socket = io();
+
+socket.on("call_event", function(data){
+
+    var row = document.createElement("tr");
+
+    row.innerHTML =
+        "<td>"+data.id+"</td>"+
+        "<td>"+(data.call_date || "-")+"</td>"+
+        "<td>"+(data.call_time || "-")+"</td>"+
+        "<td>"+(data.extension || "-")+"</td>"+
+        "<td>"+(data.call_type || "-")+"</td>"+
+        "<td>"+(data.phone_number || "-")+"</td>"+
+        "<td>"+(data.duration || "-")+"</td>";
+
+    document.getElementById("calls").appendChild(row);
+
+});
+
+</script>
+
+</body>
+</html>
