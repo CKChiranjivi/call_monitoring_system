@@ -105,6 +105,23 @@ Then open the **dashboard in your browser**.
 
 ---
 
+---
+## Database Architecture (MYSQL)
+
+---
+<img width="1207" height="488" alt="Screenshot 2026-03-07 151022" src="https://github.com/user-attachments/assets/0629d9c0-b2e0-4847-b665-97a4b7090782" />
+---
+
+
+## Live Dashboard Screenshot (Data receive from MYSQL Databaase)
+
+---
+<img width="947" height="819" alt="Screenshot 2026-03-07 150503" src="https://github.com/user-attachments/assets/ba4d7a4f-5934-4660-bcb9-c947bb180675" />
+
+---
+
+
+
 ## 🔮 Future Improvements
 
 - Call analytics dashboard  
@@ -120,3 +137,4 @@ Then open the **dashboard in your browser**.
 
 GitHub:  
 https://github.com/CKChiranjivi
+
