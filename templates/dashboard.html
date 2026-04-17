@@ -2,19 +2,124 @@
 <html>
 
 <head>
-
 <title>Live Call Monitoring</title>
-
 <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+
+<style>
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #f4f6f9;
+    margin: 0;
+    padding: 20px;
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+.dashboard {
+    max-width: 1100px;
+    margin: auto;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    padding: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+thead {
+    background: #007bff;
+    color: white;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+}
+
+tbody tr {
+    border-bottom: 1px solid #ddd;
+    transition: 0.3s;
+}
+
+tbody tr:hover {
+    background: #f1f1f1;
+}
+
+/* Call type colors */
+.incoming {
+    color: green;
+    font-weight: bold;
+}
+
+.outgoing {
+    color: orange;
+    font-weight: bold;
+}
+
+.missed {
+    color: red;
+    font-weight: bold;
+}
+
+/* Fade-in animation */
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0; transform: translateY(10px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+    th {
+        display: none;
+    }
+
+    td {
+        padding: 10px;
+        text-align: right;
+        position: relative;
+    }
+
+    td::before {
+        position: absolute;
+        left: 10px;
+        text-align: left;
+        font-weight: bold;
+    }
+
+    td:nth-child(1)::before { content: "ID"; }
+    td:nth-child(2)::before { content: "Date"; }
+    td:nth-child(3)::before { content: "Time"; }
+    td:nth-child(4)::before { content: "Ext"; }
+    td:nth-child(5)::before { content: "Type"; }
+    td:nth-child(6)::before { content: "Number"; }
+    td:nth-child(7)::before { content: "Duration"; }
+}
+</style>
 
 </head>
 
 <body>
 
-<h2>Live Calls</h2>
+<h2>?? Live Call Dashboard</h2>
 
-<table border="1">
-
+<div class="dashboard">
+<table>
 <thead>
 <tr>
 <th>ID</th>
@@ -30,6 +135,7 @@
 <tbody id="calls"></tbody>
 
 </table>
+</div>
 
 <script>
 
@@ -38,18 +144,23 @@ var socket = io();
 socket.on("call_event", function(data){
 
     var row = document.createElement("tr");
+    row.classList.add("fade-in");
+
+    let typeClass = "";
+    if(data.call_type === "incoming") typeClass = "incoming";
+    if(data.call_type === "outgoing") typeClass = "outgoing";
+    if(data.call_type === "missed") typeClass = "missed";
 
     row.innerHTML =
         "<td>"+data.id+"</td>"+
         "<td>"+(data.call_date || "-")+"</td>"+
         "<td>"+(data.call_time || "-")+"</td>"+
         "<td>"+(data.extension || "-")+"</td>"+
-        "<td>"+(data.call_type || "-")+"</td>"+
+        "<td class='"+typeClass+"'>"+(data.call_type || "-")+"</td>"+
         "<td>"+(data.phone_number || "-")+"</td>"+
         "<td>"+(data.duration || "-")+"</td>";
 
-    document.getElementById("calls").appendChild(row);
-
+    document.getElementById("calls").prepend(row); // newest on top
 });
 
 </script>
